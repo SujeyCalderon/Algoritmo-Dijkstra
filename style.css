@@ -1,0 +1,221 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('https://i0.wp.com/contxto.com/wp-content/uploads/2019/11/Uber_investment_Center-of-Excellence_Colombia.jpg?resize=1160%2C680&ssl=1');
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+main {
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    width: 90%;
+    max-width: 1200px;
+    display: flex;
+    gap: 20px;
+}
+
+.container {
+    display: flex;
+    gap: 20px;
+    width: 100%;
+}
+
+.form-container, .recorridos-container {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    flex: 1;
+}
+
+h1 {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: #007bff;
+}
+
+.form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+input[type="text"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+.buttons-section {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.recorridos-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.recorridos-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+}
+
+.recorridos-section h2 {
+    text-align: center;
+    color: #007bff;
+}
+
+.recorridos-section table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.recorridos-section th, .recorridos-section td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.recorridos-section th {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.recorridos-section td {
+    background-color: #f9f9f9;
+}
+
+@media screen and (max-width: 768px) {
+    main {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .form-group {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    input[type="text"] {
+        width: 100%;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+}
+
+@media print {
+    body {
+        background: none;
+        height: auto;
+    }
+
+    main {
+        box-shadow: none;
+        padding: 0;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .container {
+        padding: 0;
+    }
+
+    h1 {
+        font-size: 2rem;
+        color: #000;
+    }
+
+    .form-section {
+        box-shadow: none;
+        padding: 0;
+        background: none;
+    }
+
+    .form-group {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    input[type="text"] {
+        border: none;
+        padding: 0;
+        margin-bottom: 5px;
+        width: 100%;
+        background: none;
+    }
+
+    button {
+        display: none;
+    }
+
+    .buttons-section {
+        display: none;
+    }
+
+    .recorridos-section {
+        gap: 10px;
+    }
+
+    .recorridos-section h2 {
+        color: #000;
+    }
+
+    .recorridos-section table {
+        border: 1px solid #000;
+    }
+
+    .recorridos-section th, .recorridos-section td {
+        border: 1px solid #000;
+    }
+
+    .recorridos-section th {
+        background-color: #ddd;
+        color: #000;
+    }
+
+    .recorridos-section td {
+        background-color: #fff;
+    }
+}
