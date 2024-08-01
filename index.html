@@ -32,11 +32,6 @@
                         <input type="text" id="distanciaInput" placeholder="Ingrese la distancia">
                         <button type="button" id="agregarRutaBtn">Agregar ruta</button>
                     </div>
-                    <div>
-                        <input type="text" id="rutaInicio" placeholder="Ingrese el inicio">
-                        <input type="text" id="rutaDestino" placeholder="Ingrese el Destino">
-                        <button type="button" id="btnRutaCorta">Ver ruta más corta</button>
-                    </div>
                 </div>
                 <div class="buttons-section">
                     <button type="button" id="btnProfundidad">Ver recorrido en profundidad</button>
@@ -67,17 +62,19 @@
                             <tbody id="tbodyAnchura"></tbody>
                         </table>
                     </div>
-                    <div>
-                        <h2>Ruta más corta</h2>
-                        <table>
+                    <div class="form-section">
+                        <h2>Ruta más Corta</h2>
+                        <input type="text" id="startNodeDijkstra" placeholder="Punto de inicio">
+                        <input type="text" id="endNodeDijkstra" placeholder="Punto de destino">
+                        <button id="dijkstraBtn">Encontrar Ruta</button>
+                        <table id="dijkstraTable">
                             <thead>
                                 <tr>
-                                    <th>Inicio</th>
-                                    <th>Destino</th>
-                                    <th>Distancia</th>
+                                    <th>Ruta</th>
+                                    <th>Total</th>
                                 </tr>
                             </thead>
-                            <tbody id="tbodyDijkstra"></tbody>
+                            <tbody id="dijkstraResult"></tbody>
                         </table>
                     </div>
                 </div>

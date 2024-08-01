@@ -6,10 +6,10 @@ const btnAgregarDestino = document.getElementById("agregarDestinoBtn");
 const btnAgregarConexion = document.getElementById("agregarRutaBtn");
 const btnRecorridoProfundidad = document.getElementById("btnProfundidad");
 const btnRecorridoAnchura = document.getElementById("btnAnchura");
-const btnRedMasRapida = document.getElementById("btnRutaCorta");
 const tbodyProfundidad = document.getElementById("tbodyProfundidad");
 const tbodyAnchura = document.getElementById("tbodyAnchura");
-const tbodyDijkstra = document.getElementById("tbodyDijkstra");
+const btnDijkstra = document.getElementById("dijkstraBtn");
+const resultadoDijkstra = document.getElementById("dijkstraResult");
 
 function mostrarAlerta(icon, title, message) {
     Swal.fire({
@@ -90,32 +90,35 @@ btnRecorridoAnchura.addEventListener("click", () => {
     mostrarAlerta('info', 'Recorrido De Anchura', 'Recorrido en anchura completado');
 });
 
-btnRedMasRapida.addEventListener("click", () => {
-    tbodyDijkstra.innerHTML = '';
 
-    const rutaInicio = document.getElementById("rutaInicio").value.trim();
-    const rutaDestino = document.getElementById("rutaDestino").value.trim();
+btnDijkstra.addEventListener("click", () => {
+    if (graph.numVertices() === 0) {
+        mostrarAlerta('Error', 'no hay rutas guardadas');
+        return;
+    }
 
-    if (rutaInicio !== "" && rutaDestino !== "") {
-        const distancia = graph.dijkstra(rutaInicio, rutaDestino);
-        if (distancia !== Infinity) {
-            const row = document.createElement('tr');
-            const cellInicio = document.createElement('td');
-            const cellDestino = document.createElement('td');
-            const cellDistance = document.createElement('td');
-            cellInicio.textContent = rutaInicio;
-            cellDestino.textContent = rutaDestino;
-            cellDistance.textContent = distancia;
-            row.appendChild(cellInicio);
-            row.appendChild(cellDestino);
-            row.appendChild(cellDistance);
-            tbodyDijkstra.appendChild(row);
+    const startNode = document.getElementById("startNodeDijkstra").value.trim();
+    const endNode = document.getElementById("endNodeDijkstra").value.trim();
 
-            mostrarAlerta('success', 'Ruta Más Rápida', `La distancia más rápida entre ${rutaInicio} y ${rutaDestino} es ${distancia}`);
-        } else {
-            mostrarAlerta('Error', 'No se encontró una ruta entre las colonias especificadas');
-        }
+    if (startNode === "" || endNode === "" || !graph.getVertices().includes(startNode) || !graph.getVertices().includes(endNode)) {
+        mostrarAlerta('info','Ingrese puntos de inicio y destino válidos');
+        return;
+    }
+
+    const { path, distance } = graph.dijkstra(startNode, endNode);
+
+    resultadoDijkstra.innerHTML = '';
+
+    if (path.length) {
+        let row = resultadoDijkstra.insertRow();
+        let cellPath = row.insertCell(0);
+        let cellTotal = row.insertCell(1);
+        cellPath.innerHTML = path.join(' -> ');
+        cellTotal.innerHTML = distance; // Muestra la distancia total
     } else {
-        mostrarAlerta('Error', 'Debe ingresar ambas colonias para encontrar la ruta más rápida');
+        let row = resultadoDijkstra.insertRow();
+        let cell = row.insertCell(0);
+        cell.colSpan = 2;
+        cell.innerHTML = 'No se encontró un camino';
     }
 });

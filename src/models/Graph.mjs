@@ -26,73 +26,71 @@ export default class Graph {
     }
 
     dijkstra(startVertex, endVertex) {
-        const inf = 1000000;
-        const numVertices = this.numVertices();
-        let D = [];   
-        let L_p = [];
-        let L = []; 
-        let V = [];   
+        const infinit = 1000000000000000000000;//distancia infinita
+        const W = this.#matrizAdyacencia; 
+        const numVertices = this.numVertices(); // Número de vértices en el grafo
+        const D = Array(numVertices).fill(infinit); // Distancias inicializando con infinito
+        const previous = {}; // Vértice previo en el camino min
+        const L = new Set(); // Vértices visitados
+        const LPrime = new Set(this.#map.keys()); // Vértices no visitados
+        const startIndex = this.#map.get(startVertex);// Índice del vértice inicial
+        D[startIndex] = 0;
     
-        for (let i = 0; i < numVertices; i++) {
-            D.push(inf);   
-            L_p.push(i);    
-            V.push(i);     
-        }
-    
-        const start = this.#map.get(startVertex);
-        const end = this.#map.get(endVertex);
-    
-        D[start] = 0;
-    
-        console.log('Inicialización:');
-        console.log('D:', D);
-        console.log('L_p:', L_p);
-        console.log('L:', L);
-        console.log('V:', V);
-        console.log('------------------');
-    
-        while (L_p.length !== 0) {
-            let u = null;
-            let minDistance = inf;
-    
-            for (let i = 0; i < L_p.length; i++) {
-                if (D[L_p[i]] < minDistance) {
-                    minDistance = D[L_p[i]];
-                    u = L_p[i];
+        while (L.size < numVertices) {
+            // Encuentra el vértice en LPrime con la distancia mínima en D
+            let minVertex = null;
+            let minDist = infinit;
+            for (let vertex of LPrime) {
+                const vertexIndex = this.#map.get(vertex);
+                if (D[vertexIndex] < minDist) {
+                    minDist = D[vertexIndex];
+                    minVertex = vertex;
                 }
             }
     
-            if (u === null) {
-                break;
+            if (minVertex === null) {
+                break; // No hay un vértice 
             }
     
-            L.push(u);
-            L_p = L_p.filter(vertex => vertex !== u);
+            // Agrega el vértice mínimo a L y lo elimina de LPrime
+            L.add(minVertex);
+            LPrime.delete(minVertex);
     
-            const neighborsLinkedList = this.#matrizAdyacencia[u];
-            let current = neighborsLinkedList.head;
+            // Obtiene el índice del vértice actual
+            const u = this.#map.get(minVertex);
     
+            // Recorre los vecinos del vértice actual
+            const neighbors = W[u]; // Obtenemos los vecinos 
+            let current = neighbors.head;
             while (current) {
-                const neighbor = this.#map.get(current.value.node);
+                const v = this.#map.get(current.value.node);
                 const weight = current.value.weight;
-    
-                if (L_p.includes(neighbor) && D[u] + weight < D[neighbor]) {
-                    D[neighbor] = D[u] + weight;
+                // Actualiza la distancia al vecino si se encuentra un camino más corto
+                if (D[u] + weight < D[v]) {
+                    D[v] = D[u] + weight;
+                    previous[current.value.node] = minVertex;
                 }
-                current = current.next;
+                current = current.next;//avanza al siguiente vecino
             }
-    
-            console.log('Iteración:');
-            console.log('u:', u);
-            console.log('D:', D);
-            console.log('L_p:', L_p);
-            console.log('L:', L);
-            console.log('V:', V);
-            console.log('------------------');
         }
     
-        return D[end];
-    }
+        // Reconstruir el camino más corto si se especifica un vértice final
+        if (endVertex) {
+            const endIndex = this.#map.get(endVertex);
+            if (D[endIndex] === infinit) {
+                return { path: [], distance: infinit };
+            }
+            const path = [];// Inicializa un array para almacenar el camino desde el vértice inicial al vértice final
+            let step = endVertex;// Comienza desde el vértice final
+            while (step) {// Recorre hacia atrás desde el vértice final al inicial usando el mapa 'previous'
+                path.push(step);
+                step = previous[step];
+            }
+            return { path: path.reverse(), distance: D[endIndex] };
+        }
+    
+        return { distances: D, previous: previous };
+    }    
     
     dfs(startVertex, callback) {
         if (!this.#map.has(startVertex)) {
@@ -149,8 +147,9 @@ export default class Graph {
     }
 
     getVertices() {
-        return this.#map.keys();
+        return Array.from(this.#map.keys());
     }
+
 
     numVertices() {
         return this.#map.size;
