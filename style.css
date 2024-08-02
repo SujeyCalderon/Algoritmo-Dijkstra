@@ -5,120 +5,133 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
     background-image: url('https://i0.wp.com/contxto.com/wp-content/uploads/2019/11/Uber_investment_Center-of-Excellence_Colombia.jpg?resize=1160%2C680&ssl=1');
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    padding-top: 20px; /* Espacio en la parte superior para permitir el desplazamiento */
+    overflow-y: auto; /* Habilitar desplazamiento vertical si es necesario */
 }
 
 main {
-    background-color: #f8f9fa;
-    border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    padding: 20px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+    padding: 25px;
     width: 90%;
     max-width: 1200px;
     display: flex;
-    gap: 20px;
+    gap: 25px;
+    overflow-y: auto; /* Permitir el desplazamiento dentro del main si es necesario */
+    max-height: 90vh; /* Limitar la altura máxima del contenedor principal */
 }
 
 .container {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     width: 100%;
 }
 
 .form-container, .recorridos-container {
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     padding: 20px;
     flex: 1;
 }
 
 h1 {
-    font-size: 1.8rem;
+    font-size: 2rem;
     margin-bottom: 20px;
     text-align: center;
-    color: #007bff;
+    color: #0056b3;
+}
+
+h2 {
+    font-size: 1.6rem;
+    margin-bottom: 15px;
+    color: #0056b3;
 }
 
 .form-section {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 20px;
 }
 
 .form-group {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     align-items: center;
 }
 
 input[type="text"] {
     flex: 1;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus {
+    border-color: #0056b3;
+    outline: none;
 }
 
 button {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #0056b3;
+    color: #ffffff;
     border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
+    border-radius: 6px;
+    padding: 12px 24px;
     cursor: pointer;
-    transition: background-color 0.3s ease;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1rem;
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #004494;
+    transform: scale(1.05);
 }
 
 .buttons-section {
     display: flex;
-    gap: 20px;
+    gap: 25px;
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 25px;
 }
 
 .recorridos-container {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 25px;
 }
 
 .recorridos-section {
     display: flex;
     flex-direction: column;
-    gap: 20px;
-    justify-content: center;
-}
-
-.recorridos-section h2 {
-    text-align: center;
-    color: #007bff;
+    gap: 25px;
 }
 
 .recorridos-section table {
     width: 100%;
     border-collapse: collapse;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
 }
 
 .recorridos-section th, .recorridos-section td {
     border: 1px solid #ddd;
-    padding: 8px;
+    padding: 10px;
     text-align: center;
+    font-size: 1rem;
 }
 
 .recorridos-section th {
-    background-color: #007bff;
-    color: #fff;
+    background-color: #0056b3;
+    color: #ffffff;
 }
 
 .recorridos-section td {
@@ -128,7 +141,7 @@ button:hover {
 @media screen and (max-width: 768px) {
     main {
         flex-direction: column;
-        padding: 10px;
+        padding: 15px;
     }
 
     .form-group {
@@ -149,6 +162,7 @@ button:hover {
     body {
         background: none;
         height: auto;
+        color: #000;
     }
 
     main {
@@ -163,7 +177,7 @@ button:hover {
     }
 
     h1 {
-        font-size: 2rem;
+        font-size: 2.2rem;
         color: #000;
     }
 

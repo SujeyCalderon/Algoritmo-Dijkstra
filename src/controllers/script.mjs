@@ -8,8 +8,8 @@ const btnRecorridoProfundidad = document.getElementById("btnProfundidad");
 const btnRecorridoAnchura = document.getElementById("btnAnchura");
 const tbodyProfundidad = document.getElementById("tbodyProfundidad");
 const tbodyAnchura = document.getElementById("tbodyAnchura");
-const btnDijkstra = document.getElementById("dijkstraBtn");
-const resultadoDijkstra = document.getElementById("dijkstraResult");
+const tbodyDijkstra = document.getElementById("tbodyDijkstra");
+const btnRedMasRapida = document.getElementById("redMasRapida");
 
 function mostrarAlerta(icon, title, message) {
     Swal.fire({
@@ -91,34 +91,42 @@ btnRecorridoAnchura.addEventListener("click", () => {
 });
 
 
-btnDijkstra.addEventListener("click", () => {
-    if (graph.numVertices() === 0) {
-        mostrarAlerta('Error', 'no hay rutas guardadas');
-        return;
-    }
+btnRedMasRapida.addEventListener("click", () => {
+    tbodyDijkstra.innerHTML = '';
 
-    const startNode = document.getElementById("startNodeDijkstra").value.trim();
-    const endNode = document.getElementById("endNodeDijkstra").value.trim();
+    const inicioDijkstra = document.getElementById("inicioDijkstra").value.trim();
+    console.log("Inicio Dijkstra:", inicioDijkstra); 
 
-    if (startNode === "" || endNode === "" || !graph.getVertices().includes(startNode) || !graph.getVertices().includes(endNode)) {
-        mostrarAlerta('info','Ingrese puntos de inicio y destino válidos');
-        return;
-    }
+    if (inicioDijkstra !== "") {
+        const distances = graph.dijkstra(inicioDijkstra);
+        console.log("Distancias calculadas:", distances); 
+        if (distances) {
+            for (let [node, distance] of Object.entries(distances)) {
+                const row = document.createElement('tr');
+                const cellNode = document.createElement('td');
+                const cellDistance = document.createElement('td');
+                cellNode.textContent = node;
+                cellDistance.textContent = distance === Infinity ? 'Infinito' : distance;
+                row.appendChild(cellNode);
+                row.appendChild(cellDistance);
+                tbodyDijkstra.appendChild(row);
+            }
 
-    const { path, distance } = graph.dijkstra(startNode, endNode);
-
-    resultadoDijkstra.innerHTML = '';
-
-    if (path.length) {
-        let row = resultadoDijkstra.insertRow();
-        let cellPath = row.insertCell(0);
-        let cellTotal = row.insertCell(1);
-        cellPath.innerHTML = path.join(' -> ');
-        cellTotal.innerHTML = distance; // Muestra la distancia total
+            Swal.fire({
+                icon: 'success',
+                title: 'Rutas Más Rápidas',
+                text: `Se calcularon las distancias más rápidas desde ${inicioDijkstra}`,
+                confirmButtonColor: '#007bff'
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se encontró una ruta desde la red especificada',
+                confirmButtonColor: '#007bff'
+            });
+        }
     } else {
-        let row = resultadoDijkstra.insertRow();
-        let cell = row.insertCell(0);
-        cell.colSpan = 2;
-        cell.innerHTML = 'No se encontró un camino';
+        mostrarAlerta('error', 'Error', 'Debe ingresar la red de inicio');
     }
 });

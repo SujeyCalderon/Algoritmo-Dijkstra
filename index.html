@@ -12,7 +12,7 @@
     <main>
         <div class="container">
             <div class="form-container">
-                <h1>Gestión de Viajes Uber</h1>
+                <h1>GESTIÓN DE VIAJES UBER</h1>
                 <div class="form-section">
                     <div class="form-group">
                         <h2>Agregar Colonia</h2>
@@ -31,6 +31,9 @@
                         <h2>Distancia (km)</h2>
                         <input type="text" id="distanciaInput" placeholder="Ingrese la distancia">
                         <button type="button" id="agregarRutaBtn">Agregar ruta</button>
+                        <h2>Encontrar Ruta Más Rápida</h2>
+                        <input type="text" placeholder="Red de Inicio para Dijkstra" id="inicioDijkstra">
+                        <button type="button" id="redMasRapida">Encontrar Rutas</button>
                     </div>
                 </div>
                 <div class="buttons-section">
@@ -62,19 +65,16 @@
                             <tbody id="tbodyAnchura"></tbody>
                         </table>
                     </div>
-                    <div class="form-section">
-                        <h2>Ruta más Corta</h2>
-                        <input type="text" id="startNodeDijkstra" placeholder="Punto de inicio">
-                        <input type="text" id="endNodeDijkstra" placeholder="Punto de destino">
-                        <button id="dijkstraBtn">Encontrar Ruta</button>
-                        <table id="dijkstraTable">
+                    <div class="tabla-container">
+                        <table id="tablaDijkstra" class="tabla-recorrido">
+                            <h2>Ruta Más Rápida</h2>
                             <thead>
                                 <tr>
-                                    <th>Ruta</th>
-                                    <th>Total</th>
+                                    <th>Distancia</th>
                                 </tr>
                             </thead>
-                            <tbody id="dijkstraResult"></tbody>
+                            <tbody id="tbodyDijkstra">
+                            </tbody>
                         </table>
                     </div>
                 </div>
